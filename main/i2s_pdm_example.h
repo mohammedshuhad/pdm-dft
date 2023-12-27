@@ -7,24 +7,25 @@
 #pragma once
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-#define EXAMPLE_BUFF_SIZE   2048
+#define EXAMPLE_BUFF_SIZE 2048
 
-/**
- * @brief I2S PDM TX example task
- *
- * @param args  The user data given from task creating, not used in this example
- */
-void i2s_example_pdm_tx_task(void *args);
+    /**
+     * @brief I2S PDM TX example task
+     *
+     * @param args  The user data given from task creating, not used in this example
+     */
+    void i2s_example_pdm_tx_task(void *args);
 
-/**
- * @brief I2S PDM RX example task
- *
- * @param args  The user data given from task creating, not used in this example
- */
-void i2s_example_pdm_rx_task(void *args);
+    /**
+     * @brief I2S PDM RX example task
+     *
+     * @param args  The user data given from task creating, not used in this example
+     */
+    void i2s_example_pdm_rx_task(void *args);
 
 #ifdef __cplusplus
 }

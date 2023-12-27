@@ -1,7 +1,8 @@
 #include "ledVisualization.h"
 
 LedVisualEffects::LedVisualEffects(uint16_t n_mels_bin,
-                                   uint16_t number_of_leds) {
+                                   uint16_t number_of_leds)
+{
   number_of_mel_bins = n_mels_bin;
   n_leds = number_of_leds;
   led_list[0] = new uint8_t[n_leds / 2];
@@ -12,7 +13,8 @@ LedVisualEffects::LedVisualEffects(uint16_t n_mels_bin,
   gaussian_filter_scroll_effect = new one_dimensional_gaussian_filter(0.2);
 }
 
-LedVisualEffects::~LedVisualEffects() {
+LedVisualEffects::~LedVisualEffects()
+{
   delete[] led_list[0];
   delete[] led_list[1];
   delete[] led_list[2];
@@ -20,20 +22,25 @@ LedVisualEffects::~LedVisualEffects() {
   delete gaussian_filter_scroll_effect;
 }
 
-void LedVisualEffects::mirror(uint8_t* addressable_leds) {
-  for (int i = 0; i < n_leds / 2; i++) {
-    // addressable_leds[n_leds / 2 + i].r = led_list[0][i];
-    // addressable_leds[n_leds / 2 + i].g = led_list[1][i];
-    // addressable_leds[n_leds / 2 + i].b = led_list[2][i];
-    // addressable_leds[n_leds / 2 - i - 1].r = led_list[0][i];
-    // addressable_leds[n_leds / 2 - i - 1].g = led_list[1][i];
-    // addressable_leds[n_leds / 2 - i - 1].b = led_list[2][i];
+void LedVisualEffects::mirror(uint8_t *addressable_leds)
+{
+  uint16_t n_half = n_leds / 2;
+  for (int i = 0; i < n_leds / 2; i++)
+  {
+    addressable_leds[(n_half + i) * 3 + 0] = led_list[0][i];     // red
+    addressable_leds[(n_half + i) * 3 + 1] = led_list[1][i];     // green
+    addressable_leds[(n_half + i) * 3 + 2] = led_list[2][i];     // blue
+    addressable_leds[(n_half - i - 1) * 3 + 0] = led_list[0][i]; // red
+    addressable_leds[(n_half - i - 1) * 3 + 1] = led_list[1][i]; // green
+    addressable_leds[(n_half - i - 1) * 3 + 2] = led_list[2][i]; // blue
   }
 }
 
-void LedVisualEffects::scroll_mel_audio_data(float* mel_audio_data,
-                                             uint8_t* addressable_leds) {
-  for (int i = 0; i < number_of_mel_bins; i++) {
+void LedVisualEffects::scroll_mel_audio_data(float *mel_audio_data,
+                                             uint8_t *addressable_leds)
+{
+  for (int i = 0; i < number_of_mel_bins; i++)
+  {
     mel_audio_data[i] = mel_audio_data[i] * mel_audio_data[i];
   }
 
@@ -45,15 +52,21 @@ void LedVisualEffects::scroll_mel_audio_data(float* mel_audio_data,
   float red = 0.0, green = 0.0, blue = 0.0;
 
   for (int i = 0; i < number_of_mel_bins; i++)
-    if (i < number_of_mel_bins / 3) {
+    if (i < number_of_mel_bins / 3)
+    {
       red = std::max(red, mel_audio_data[i]);
-    } else if (i > number_of_mel_bins * 2 / 3) {
+    }
+    else if (i > number_of_mel_bins * 2 / 3)
+    {
       blue = std::max(blue, mel_audio_data[i]);
-    } else {
+    }
+    else
+    {
       green = std::max(green, mel_audio_data[i]);
     }
 
-  for (int i = ((n_leds / 2) - 1); i > 0; i--) {
+  for (int i = ((n_leds / 2) - 1); i > 0; i--)
+  {
     led_list[0][i] = (led_list[0][i - 1] == 0) ? 0 : led_list[0][i - 1] - 1;
     led_list[1][i] = (led_list[1][i - 1] == 0) ? 0 : led_list[1][i - 1] - 1;
     led_list[2][i] = (led_list[2][i - 1] == 0) ? 0 : led_list[2][i - 1] - 1;

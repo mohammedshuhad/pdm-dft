@@ -2,14 +2,15 @@
 
 #include <cmath>
 
-class ExponentialDiscreteFilter {
- private:
+class ExponentialDiscreteFilter
+{
+private:
   float *filter_output_buffer;
   int len_of_filter;
   float exp_alpha_decay;
   float exp_alpha_rise;
 
- public:
+public:
   ExponentialDiscreteFilter(float *val, int val_len, float alpha_decay,
                             float alpha_rise);
   ExponentialDiscreteFilter(int val_len, float alpha_decay, float alpha_rise);
@@ -20,12 +21,13 @@ class ExponentialDiscreteFilter {
   float *get_filter_output_buffer();
 };
 
-class one_dimensional_gaussian_filter {
- private:
+class one_dimensional_gaussian_filter
+{
+private:
   float *gaussian_kernel_1d;
   int radius;
 
- public:
+public:
   one_dimensional_gaussian_filter(float sigma);
   ~one_dimensional_gaussian_filter();
   void apply_gaussian_kernel_on_data(float *data, int num);
