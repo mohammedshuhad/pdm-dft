@@ -49,7 +49,7 @@ static const gpio_num_t single_spi_mosi = GPIO_NUM_33;
 static const gpio_num_t single_spi_sclk = GPIO_NUM_32;
 static const int NUM_OUTPUTS = 1;
 static const int NUM_UNIVERSES_PER_OUTPUT = 1;
-static const int NUM_LEDS_PER_UNIVERSE = 60;
+static const int NUM_LEDS_PER_UNIVERSE = 42;
 static const int NUM_UNIVERSES = NUM_OUTPUTS * NUM_UNIVERSES_PER_OUTPUT;
 static const int speed = 2000000; // 2MHz
 static const size_t APA102_BYTES_PER_LEDS = 4;
@@ -275,7 +275,7 @@ extern "C" void app_main(void)
         {
             printf("Read Task: i2s read failed\n");
         }
-        vTaskDelay(pdMS_TO_TICKS(200));
+        // vTaskDelay(pdMS_TO_TICKS(200));
     }
     free(r_buf);
     vTaskDelete(NULL);
